@@ -33,8 +33,8 @@ awareness app). **DF** = direction finding (estimating which way a sound came fr
 
 | Release asset | ATAK host |
 |---|---|
-| `...-atak551` APK | ATAK-CIV 5.5.1.x |
-| standard APK | ATAK-CIV 5.6.0 |
+| `...-ATAK551-TPC-SIGNED.apk` | ATAK-CIV 5.5.1.x |
+| ATAK-CIV 5.6.0 build | coming; will be added to the v1.0.0 release |
 
 The APK is signed by the TAK Product Center **third-party signing service**; ATAK
 displays the third-party-signed indicator for such plugins.
