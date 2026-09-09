@@ -65,6 +65,26 @@ displays the third-party-signed indicator for such plugins.
 - Full multi-node capability (correlation, localization) requires a PICKET Fusion
   server; standalone phones get the local cue and classification only.
 
+## Free version vs. production
+
+This is the **free version**, and it is genuinely useful on its own: on-device
+classification, a live acoustic bearing, and, with the open reference server, multi-device
+cross-fixing on a map. It's free for noncommercial use, and it's meant to be used.
+
+What it is not is the production system. The free stack does **report-level** fusion:
+each phone detects independently and the reference server crosses their bearings. The
+**production PICKET** stack does coherent, sensor-level fusion, combining devices and
+purpose-built nodes into one array with far better sensitivity, localization, and
+classification, at scale, hardened for the field. That's a commercial product.
+
+- **Free (this repo):** the plugin + a bare-bones reference server, for evaluation,
+  research, and noncommercial use.
+- **Production:** the full PICKET Fusion engine and sensor mesh, licensed. See
+  [`COMMERCIAL.md`](./COMMERCIAL.md) or open a "Commercial license inquiry" issue.
+
+If the free version is useful to you, the production version is a large step up. We built
+the free one so you can see it work before you decide.
+
 ## Legal / usage
 
 ATAK-CIV is a U.S. Government product released open source and classified EAR99.
