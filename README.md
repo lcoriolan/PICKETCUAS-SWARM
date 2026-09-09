@@ -69,21 +69,29 @@ displays the third-party-signed indicator for such plugins.
 
 This is the **free version**, and it is genuinely useful on its own: on-device
 classification, a live acoustic bearing, and, with the open reference server, multi-device
-cross-fixing on a map. It's free for noncommercial use, and it's meant to be used.
+cross-fixing on a map. It's free for noncommercial use, and it's meant to be used. The
+production PICKET stack is a large step up in sensitivity, accuracy, scale, and
+robustness. Side by side:
 
-What it is not is the production system. The free stack does **report-level** fusion:
-each phone detects independently and the reference server crosses their bearings. The
-**production PICKET** stack does coherent, sensor-level fusion, combining devices and
-purpose-built nodes into one array with far better sensitivity, localization, and
-classification, at scale, hardened for the field. That's a commercial product.
+| Capability | Free (this repo) | Production PICKET |
+|---|---|---|
+| **Use / license** | Noncommercial: evaluation, research, personal (PolyForm Noncommercial) | Commercial & operational deployment (licensed) |
+| **On-device detection + classification** | Yes: 7-class acoustic classifier on the phone | Yes: tuned, expanded class set, continuously improved |
+| **Single-device bearing** | Yes: two-mic acoustic bearing | Yes: multi-mic, calibrated, higher accuracy |
+| **Multi-device fusion** | Report-level: crosses independent per-phone bearings | Coherent, sensor-level: devices combined into one array |
+| **Localization** | Bearing cross-fix (triangulation) on the reference server | Certified localization, materially better accuracy and reliability |
+| **Sensing modalities** | Acoustic | Acoustic + passive RF, multi-modal |
+| **Sensors supported** | COTS Android phones | COTS phones + purpose-built PICKET nodes and long-range sensors |
+| **Scale** | Demo-grade: a handful of phones on one host, single process | Horizontal scale: large, self-healing meshes |
+| **Server** | Bare-bones open reference server (in this repo) | Full PICKET Fusion engine (not in this repo) |
+| **Persistence / evidence** | None (in-memory, ephemeral) | Persistent, evidence-grade logging and replay |
+| **Field hardening** | None (evaluation only) | Hardened for degraded, denied, and contested environments |
+| **ATAK / CoT** | Yes: fused contacts to the map | Yes, extended integration |
+| **Support** | Community / GitHub issues | Commercial support, integration, and SLAs |
 
-- **Free (this repo):** the plugin + a bare-bones reference server, for evaluation,
-  research, and noncommercial use.
-- **Production:** the full PICKET Fusion engine and sensor mesh, licensed. See
-  [`COMMERCIAL.md`](./COMMERCIAL.md) or open a "Commercial license inquiry" issue.
-
-If the free version is useful to you, the production version is a large step up. We built
-the free one so you can see it work before you decide.
+The free version proves the interface and lets you see it work. The production version is
+what you deploy. See [`COMMERCIAL.md`](./COMMERCIAL.md) or open a "Commercial license
+inquiry" issue.
 
 ## Legal / usage
 
