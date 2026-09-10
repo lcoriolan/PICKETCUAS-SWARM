@@ -29,6 +29,15 @@ awareness app). **DF** = direction finding (estimating which way a sound came fr
 - **Measurement-grade capture**: the plugin disables the phone's voice-call audio
   processing (gain control, noise suppression, echo cancellation) so the signal
   chain stays faithful to what the microphones actually heard.
+- **Live spectrogram (SPECTRO)**: a real-time waterfall so you can see a source's
+  tonal signature, with SUPER LISTEN controls to tune and zoom a frequency band.
+- **DUAL view**: a full-screen, side-by-side spectrogram and DF bubble, the primary
+  "watch it work" operating screen.
+- **Boresight calibration (CALIBRATE)**: face a known source, hold about five seconds,
+  and the plugin learns a persisted bearing offset that corrects the local array.
+- **Pairs with PICKET SNOOPY**: while streaming, SWARM tells the RF plugin to ease its
+  radios ("gentle mode") so the acoustic clock stays in sync, and hands SNOOPY its
+  acoustic drone detections so they can be cross-checked against Remote ID.
 
 ## Distributed acoustic array (what SWARM is for)
 
