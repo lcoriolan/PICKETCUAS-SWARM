@@ -54,6 +54,25 @@ from the phones an operator already carries, instead of one fixed sensor mast.
 - **Production PICKET**: a coherent, sensor-level array. Devices are combined into one
   array for materially better localization accuracy and reliability.
 
+## CoHear: the differentiator (one big ear)
+
+Report-level cross-fixing is table stakes. **PICKET's real strength is CoHear: coherent,
+sample-level combining that turns many phones into one big ear.** Where the free array crosses
+independent bearings, CoHear aligns the raw clips from every node to sub-sample accuracy with
+GCC-PHAT and delay-and-sums them, so a source too faint for any single phone to call rises out
+of the noise. The array gain grows with every node that contributes a clip, and the alignment
+needs no shared microsecond hardware clock, which is what makes it work across ordinary,
+software-clocked phones.
+
+That coherent combining is what separates PICKET from a collection of independent sensors:
+weak-signal detection, a single beamformed rendering of the source, and tighter localization,
+all from commodity devices. It has been validated in simulation benchmarks and in field tests.
+
+See [`cohear-demo/`](./cohear-demo/) for a runnable, self-contained demonstration on synthetic
+data: a source 6 dB under the noise on every phone becomes clearly detectable once six of them
+combine. The production CoHear engine (the gating, clip selection, coincidence-gain weighting,
+and field tuning that make it robust at scale) is not in this repository.
+
 ## Supported ATAK versions
 
 | Release asset | ATAK host |
