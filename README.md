@@ -91,6 +91,90 @@ and field tuning that make it robust at scale) is not in this repository.
 repository (a "CoHear demo request"). We are glad to show coherent combining running on real
 nodes end to end.
 
+## Listening range and coherent scale
+
+CoHear's array gain (`10·log10(N)`) converts to detection range as about `√N` **in the
+weak-signal regime**: roughly 4x more coherent phones doubles the range on a faint source.
+From a single phone's ~80 m bare range against a quiet small drone:
+
+| Coherent phones | Array gain | Range vs 1 | Reach on a quiet drone* |
+|---|---|---|---|
+| 1 | 0 dB | 1x | ~80 m |
+| 4 | +6.0 dB | 2x | ~160 m |
+| 12 | +10.8 dB | 3.5x | ~280 m |
+| 24 | +13.8 dB | 4.9x | ~390 m |
+| 48 | +16.8 dB | 6.9x | ~555 m |
+| ~96 | +19.8 dB | 10x | ~785 m |
+
+Past ~100 coherent phones the curve flattens (`√N` needs 4x the devices to double range
+again), and only phones close enough to hear an event combine coherently for it, so beyond a
+local cluster more phones add **coverage**, not **range**. That is the practical
+diminishing-returns point for a single source.
+
+### By drone class (single sensor, modeled)
+
+A "drone" is not one sound: a two-stroke Shahed and a whisper-quiet electric FPV differ by
+about 30 dB, which is roughly 30x in range. Modeled single-sensor detection ranges, from
+PICKET's threat model (`SPL(r) = SPL@1m - 20*log10(r)`):
+
+| Class (example) | SPL@1m | Single-sensor range | Coherent effect |
+|---|---|---|---|
+| Naval USV (Magura V5) | ~98 dB | ~3.8 km | already long: combining sharpens the fix |
+| One-way attack (Shahed-136) | ~98 dB | ~2.5 km | already long: combining sharpens the fix |
+| MALE (Bayraktar TB2) | ~88 dB | ~795 m | mostly fix, modest reach gain |
+| Recon (Orlan-10) | ~84 dB | ~500 m | weak-signal: reach scales `√N` |
+| Loiter munition (Lancet-3) | ~78 dB | ~250 m | weak-signal: reach scales `√N` |
+| FPV quad | ~70 dB | ~100 m | weak-signal: `√N` (about ~690 m at 48 phones) |
+| Quiet / fiber-optic FPV | ~68 dB | ~80 m | weak-signal: `√N` (about ~800 m at ~100 phones) |
+
+The quiet, low-flying FPV is the hard target, and it is exactly where coherent combining helps
+most: it turns a ~80-100 m single-phone range into hundreds of meters as the cluster grows.
+Loud, long-range classes are already limited by air absorption rather than SNR, so more ears
+tighten the **bearing and fix** instead of extending the range.
+
+### Other battlefield sounds (published-literature estimates, illustrative)
+
+SWARM's classifier also flags gunfire, explosions, vehicles, aircraft, and voice. We have not
+metered these ourselves, so the figures below are **published-literature typical ranges for a
+single acoustic sensor, illustrative only** and are NOT from PICKET's model or measurements.
+Impulsive sources (muzzle blast, detonations) do not follow the drone free-field model, and
+real ranges swing widely with the weapon, terrain, wind, and atmosphere.
+
+| Source | Character | Illustrative single-sensor range |
+|---|---|---|
+| Small-arms gunfire | very loud, impulsive | ~1-2 km |
+| Heavy weapons / autocannon | very loud, impulsive | ~2-4 km |
+| Artillery / mortar / explosions | extreme, impulsive | ~5-15+ km |
+| Armored vehicle / engine | loud, continuous | ~0.3-1 km |
+| Low helicopter / aircraft | loud, continuous | ~2-5 km |
+| Human speech (conversational) | quiet | ~10-50 m |
+
+### Inter-node spread matters
+
+Coherent scale is not just node *count*, it is node *spacing*. PICKET seeds nodes at roughly
+**70-120 m** apart (tighter on the danger avenues, looser across open ground), so any mover is
+heard by at least three ears. A wider spread gives a bigger aperture and a sharper fix; too
+wide and a given source is not co-heard by enough nodes to combine coherently. Because the
+combine is timing-based, timing spread matters too: in simulation CoHear holds about **9.5 dB
+of gain at 0.5 ms** of inter-node jitter and about **5 dB at 1.3 ms**, which is why it works on
+ordinary software-clocked phones with no shared hardware clock.
+
+### Beamforming
+
+The combine is coherent (sub-sample GCC-PHAT alignment, not averaged reports), so CoHear steers
+a beam toward the source. The same step that lifts a weak signal also sharpens its bearing, so
+more ears mean longer reach **and** a tighter fix at the same time.
+
+\* Modeled projection, not hardware-measured, and **set by the ambient noise floor.** Detection
+happens where the source level clears the local noise, so range scales inversely with that
+floor: these figures assume a quiet ~30 dB floor, and **every +6 dB of ambient roughly halves
+the range.** Wind alone adds ~10-20 dB, and a live battlefield is nowhere near quiet, so treat
+these as best-case-quiet ceilings, not field guarantees. The array's job is partly to fight
+this: coherent gain raises the effective floor margin, which is why more ears help most exactly
+when it is noisy. Uses the `10·log10(N)` / `√N` array law (validated in simulation through 12
+nodes) on a modeled ~80 m single-phone baseline (propulsion-class SPL estimate). Real range
+depends on the source, the ambient noise floor, wind, and terrain.
+
 ## Supported ATAK versions
 
 | Release asset | ATAK host |
