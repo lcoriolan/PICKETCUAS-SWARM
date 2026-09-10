@@ -66,12 +66,30 @@ software-clocked phones.
 
 That coherent combining is what separates PICKET from a collection of independent sensors:
 weak-signal detection, a single beamformed rendering of the source, and tighter localization,
-all from commodity devices. It has been validated in simulation benchmarks and in field tests.
+all from commodity devices.
+
+**What the simulations show** (CoHear benchmark suite, all cases PASS):
+
+- **Array gain tracks the theoretical ideal.** Measured gain lands within ~0.1 dB of
+  `10*log10(N)`: **+3.0 dB at 2 nodes, +6.0 dB at 4, +9.0 dB at 8, +10.8 dB at 12.**
+- **Detection range scales with the square root of the node count.** About **2x range at 4
+  nodes, 2.8x at 8, and 3.4x at 12** versus a single phone.
+- **Sub-meter localization.** Steered-response-power localization placed a source to within
+  **0.35 m** of truth.
+- **Robust to software-clock sync error.** CoHear keeps roughly **9.5 dB of gain at 0.5 ms**
+  of inter-node timing jitter and about **5 dB at 1.3 ms**, so it does not need a
+  microsecond-accurate hardware clock. This is what makes it work on ordinary phones.
+
+These are simulation-benchmark results; field tests corroborate the on-node combining case.
 
 See [`cohear-demo/`](./cohear-demo/) for a runnable, self-contained demonstration on synthetic
 data: a source 6 dB under the noise on every phone becomes clearly detectable once six of them
 combine. The production CoHear engine (the gating, clip selection, coincidence-gain weighting,
 and field tuning that make it robust at scale) is not in this repository.
+
+**For a full CoHear demonstration on live hardware, reach out** by opening an issue on this
+repository (a "CoHear demo request"). We are glad to show coherent combining running on real
+nodes end to end.
 
 ## Supported ATAK versions
 
