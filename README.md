@@ -1,6 +1,7 @@
-# PICKET ACOUSTINT — Acoustic Detection Plugin for ATAK
+# PICKET SWARM: Distributed Acoustic Detection Plugin for ATAK
 
-PICKET ACOUSTINT turns an Android phone running ATAK into an acoustic sensing node.
+PICKET SWARM turns an Android phone running ATAK into an acoustic sensing node, and
+turns a handful of those phones into one distributed microphone array.
 It captures audio on-device, runs all signal processing on the phone (no cloud), and
 gives the operator a live acoustic bearing cue and a 7-class sound classification
 (background, drone, aircraft, vehicle, voice, gunfire, explosion) directly on the
@@ -17,7 +18,7 @@ awareness app). **DF** = direction finding (estimating which way a sound came fr
   hears into 7 classes and shows an advisory "edge vote" with per-class confidence.
 - **On-device direction finding**: on phones that expose two direct microphone
   channels, the plugin produces a live acoustic bearing cue, rendered as a bearing
-  fan in the ACOUSTINT BUBBLE panel (six selectable cue styles).
+  fan in the PICKET SWARM bubble panel (six selectable cue styles).
 - **Honest by design**: when there is no fresh bearing the cue says
   "NO FRESH BEARING" instead of holding a stale one; front/back ambiguous bearings
   render the rear lobe dimmed; an uncalibrated array widens the displayed cone.
@@ -28,6 +29,21 @@ awareness app). **DF** = direction finding (estimating which way a sound came fr
 - **Measurement-grade capture**: the plugin disables the phone's voice-call audio
   processing (gain control, noise suppression, echo cancellation) so the signal
   chain stays faithful to what the microphones actually heard.
+
+## Distributed acoustic array (what SWARM is for)
+
+A single phone gives you classification and a bearing. The point of PICKET SWARM is
+what happens with **several** phones: each one is a node in a distributed acoustic
+array. Every node contributes its own time-stamped onsets and bearing to a shared
+PICKET server, which cross-fixes those independent per-phone bearings into a single
+located contact on the ATAK map. More phones spread over more ground means a wider
+synthetic aperture and a better fix. It is a synthetic-aperture microphone array built
+from the phones an operator already carries, instead of one fixed sensor mast.
+
+- **Free (this repo)**: a report-level array. Independent per-phone bearings are
+  crossed (triangulated) on the open reference server to localize the source.
+- **Production PICKET**: a coherent, sensor-level array. Devices are combined into one
+  array for materially better localization accuracy and reliability.
 
 ## Supported ATAK versions
 
