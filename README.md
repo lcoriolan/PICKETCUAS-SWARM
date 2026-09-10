@@ -165,6 +165,20 @@ The combine is coherent (sub-sample GCC-PHAT alignment, not averaged reports), s
 a beam toward the source. The same step that lifts a weak signal also sharpens its bearing, so
 more ears mean longer reach **and** a tighter fix at the same time.
 
+### Distributed noise cancellation
+
+A coherent array does not just add signal, it subtracts noise. The source arrives coherently at
+every node while each node's ambient does not, so combining cancels the uncorrelated part of the
+noise. That is the array gain, and it is exactly why more ears help most when the environment is
+loud: the noise-floor limit above is what a distributed array is built to push back on.
+
+Beyond that inherent gain, when a single loud interferer dominates (a generator, a road, a
+nearby engine), adaptive beamforming (MVDR / Capon) can steer a spatial null onto that direction
+and reject it while holding the main beam on the target. Spatially separated ears are what make
+this possible: a distributed array can null noise that no single microphone ever could. (The
+inherent uncorrelated-noise gain is the validated part; directional null-steering is standard
+adaptive-array processing that the beamforming path supports.)
+
 \* Modeled projection, not hardware-measured, and **set by the ambient noise floor.** Detection
 happens where the source level clears the local noise, so range scales inversely with that
 floor: these figures assume a quiet ~30 dB floor, and **every +6 dB of ambient roughly halves
