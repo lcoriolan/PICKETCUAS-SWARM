@@ -58,8 +58,11 @@ from the phones an operator already carries, instead of one fixed sensor mast.
 
 | Release asset | ATAK host |
 |---|---|
-| `...-ATAK551-TPC-SIGNED.apk` | ATAK-CIV 5.5.1.x |
-| ATAK-CIV 5.6.0 build | coming; will be added to the v1.0.0 release |
+| `PICKETCUAS-SWARM-2.0.0-ATAK5.5.1.apk` | ATAK-CIV 5.5.1.x |
+| `PICKETCUAS-SWARM-2.0.0-ATAK5.8.apk` | ATAK-CIV 5.8.x |
+
+Same plugin, same version: install the APK that matches your ATAK host (a plugin's
+API level must match the ATAK it runs on).
 
 The APK is signed by the TAK Product Center **third-party signing service**; ATAK
 displays the third-party-signed indicator for such plugins.
