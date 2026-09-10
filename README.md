@@ -8,6 +8,13 @@ gives the operator a live acoustic bearing cue and a 7-class sound classificatio
 ATAK map. When paired with a PICKET Fusion server it also ships event clips and
 telemetry over mutual-TLS WebSocket for multi-node correlation.
 
+More than a drone spotter, PICKET SWARM is the phone tier of a holistic **acoustic
+battlefield situational-awareness** system. It hears and places the sounds of the fight,
+drones overhead, gunfire, vehicles, and other movers, and turns them into tracks on the
+map. Sound is passive: it needs no emitter, keeps working when GPS and comms are denied,
+and gives an enemy nothing to detect or jam, so the acoustic picture holds when other
+sensors go dark.
+
 Glossary: **ATAK** = Android Team Awareness Kit (the DoD-released situational
 awareness app). **DF** = direction finding (estimating which way a sound came from).
 **C-UAS** = counter-unmanned-aircraft systems. **EUD** = end user device (the phone).
@@ -188,6 +195,24 @@ this: coherent gain raises the effective floor margin, which is why more ears he
 when it is noisy. Uses the `10·log10(N)` / `√N` array law (validated in simulation through 12
 nodes) on a modeled ~80 m single-phone baseline (propulsion-class SPL estimate). Real range
 depends on the source, the ambient noise floor, wind, and terrain.
+
+## Self-organizing, self-localizing mesh
+
+Sensors are only useful if you know where they are. PICKET's production node mesh solves that
+itself: drop the nodes and they **compute their own positions from the sounds they share, with
+no survey and no GPS.** One broadband event heard across the fleet is enough for the nodes to
+multilaterate their own geometry. That gives you:
+
+- **Drop-and-go.** Hand-place or airdrop nodes and the field draws itself, no setup, no survey,
+  no site prep.
+- **GPS- and comms-denied operation.** The mesh self-locates and keeps producing tracks when GPS
+  is spoofed and networks are jammed, the exact conditions that blind networked sensors.
+- **No single point of failure.** Router-free and leaderless, it self-heals when a node drops.
+
+In bench and replay validation the solver recovered a known node layout to about **6 cm**; it is
+validated on the bench, **not yet field-demonstrated.** The self-localizing joint solver is
+**patent-pending.** This is a production-tier capability of the PICKET node mesh, the free phone
+plugin uses the phone's own GPS through ATAK.
 
 ## Supported ATAK versions
 
