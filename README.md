@@ -196,23 +196,26 @@ when it is noisy. Uses the `10·log10(N)` / `√N` array law (validated in simul
 nodes) on a modeled ~80 m single-phone baseline (propulsion-class SPL estimate). Real range
 depends on the source, the ambient noise floor, wind, and terrain.
 
-## Self-organizing, self-localizing mesh
+## At scale: a distributed array on the phones you already have
 
-Sensors are only useful if you know where they are. PICKET's production node mesh solves that
-itself: drop the nodes and they **compute their own positions from the sounds they share, with
-no survey and no GPS.** One broadband event heard across the fleet is enough for the nodes to
-multilaterate their own geometry. That gives you:
+Every capability above runs on ordinary phones. Each phone is a node: it self-positions from its
+own GPS (so a deployment needs no survey), classifies and bearings on-device, and, when it is
+pointed at a Fusion server, streams its detections and mono audio clips into the shared picture
+(standalone, nothing leaves the phone). The architecture does not care whether there are three
+phones or a thousand, more phones mean a wider aperture, more coherent gain, longer reach, and
+denser coverage.
 
-- **Drop-and-go.** Hand-place or airdrop nodes and the field draws itself, no setup, no survey,
-  no site prep.
-- **GPS- and comms-denied operation.** The mesh self-locates and keeps producing tracks when GPS
-  is spoofed and networks are jammed, the exact conditions that blind networked sensors.
-- **No single point of failure.** Router-free and leaderless, it self-heals when a node drops.
+Taken to its limit, that is the interesting part: stand up enough phones running this tool,
+hundreds across an area, and you have a distributed acoustic battlefield-awareness mesh built
+entirely from commodity devices, with no dedicated sensors at all. A thousand phones is, in
+principle, a thousand-node acoustic array.
 
-In bench and replay validation the solver recovered a known node layout to about **6 cm**; it is
-validated on the bench, **not yet field-demonstrated.** The self-localizing joint solver is
-**patent-pending.** This is a production-tier capability of the PICKET node mesh, the free phone
-plugin uses the phone's own GPS through ATAK.
+Phones normally take their position from GPS, but they need not depend on it. The same acoustic
+self-localization the dedicated PICKET nodes use, solving each node's position by multilaterating
+a sound the array shares, could in principle run on the phones too, so a phone swarm could keep
+placing itself even with GPS denied. The purpose-built PICKET system still pushes the idea
+further with longer-range collectors and ruggedized drop-and-go hardware, but the core capability
+is this tool, and it scales with the phones already in people's pockets.
 
 ## Supported ATAK versions
 
