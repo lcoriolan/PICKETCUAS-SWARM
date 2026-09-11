@@ -100,11 +100,12 @@ nodes end to end.
 
 ## Listening range and coherent scale
 
-CoHear's array gain (`10·log10(N)`) converts to detection range as about `√N` **in the
-weak-signal regime**: roughly 4x more coherent phones doubles the range on a faint source.
-From a single phone's ~80 m bare range against a quiet small drone:
+CoHear's array gain (`10·log10(N)`) turns into detection range as about `√N` in the weak-signal
+regime, the clean **spreading-only law, before air absorption**: roughly 4x more coherent phones
+doubles the range on a faint source. From a single phone's ~80 m bare range against a quiet small
+drone (the absorption-aware, per-class figures are in the next table):
 
-| Coherent phones | Array gain | Range vs 1 | Reach on a quiet drone* |
+| Coherent phones | Array gain | Range vs 1 | Reach, spreading only* |
 |---|---|---|---|
 | 1 | 0 dB | 1x | ~80 m |
 | 4 | +6.0 dB | 2x | ~160 m |
@@ -117,6 +118,10 @@ Past ~100 coherent phones the curve flattens (`√N` needs 4x the devices to dou
 again), and only phones close enough to hear an event combine coherently for it, so beyond a
 local cluster more phones add **coverage**, not **range**. That is the practical
 diminishing-returns point for a single source.
+
+\* Spreading-only `√N`: array gain versus distance with **no air absorption**, a clean upper-bound
+law. Real reach is lower once frequency-dependent absorption is folded in, sharply so for
+high-pitched sources; the by-drone-class table below gives the absorption-aware numbers.
 
 ### By drone class: single sensor vs CoHear (modeled)
 
