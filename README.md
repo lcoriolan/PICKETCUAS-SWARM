@@ -128,20 +128,20 @@ coherent combining reaches per class, one phone versus a swarm, from PICKET's th
 
 | Class (example) | SPL@1m | Acoustic signature (modeled) | 1 sensor | With CoHear (~48 sensors)* |
 |---|---|---|---|---|
-| Naval USV (Magura V5) | ~98 dB | marine engine, ~50-300 Hz | ~3.8 km | low freq carries far, already km-scale: CoHear adds gain and tightens the fix |
-| One-way attack (Shahed-136) | ~98 dB | two-stroke buzz, ~80-300 Hz | ~2.5 km | low freq carries far: CoHear adds gain and tightens the fix |
-| MALE (Bayraktar TB2) | ~88 dB | prop + engine, ~100-500 Hz | ~795 m | mid band: CoHear extends modestly, then mostly fix |
-| Recon (Orlan-10) | ~84 dB | small ICE buzz, ~150-600 Hz | ~500 m | ~3.5 km (low band carries) |
+| Naval USV (Magura V5) | ~98 dB | marine engine, ~50-300 Hz | ~3.8 km | ~26 km |
+| One-way attack (Shahed-136) | ~98 dB | two-stroke buzz, ~80-300 Hz | ~2.5 km | ~17 km |
+| MALE (Bayraktar TB2) | ~88 dB | prop + engine, ~100-500 Hz | ~795 m | ~5.5 km |
+| Recon (Orlan-10) | ~84 dB | small ICE buzz, ~150-600 Hz | ~500 m | ~3.5 km |
 | Loiter munition (Lancet-3) | ~78 dB | electric pusher, ~200 Hz-2 kHz | ~250 m | ~1.7 km |
-| FPV quad | ~70 dB | multirotor whine, ~2-8 kHz (blade-rate comb) | ~100 m | ~690 m (high-band absorption tempers) |
+| FPV quad | ~70 dB | multirotor whine, ~2-8 kHz (blade-rate comb) | ~100 m | ~690 m |
 | Quiet / fiber-optic FPV | ~68 dB | high whine, ~2-8 kHz | ~80 m | ~555 m |
 
-\* Coherent reach at ~48 phones (`√48 ≈ 6.9x`) in the weak-signal regime; scale to other counts by
-`√N` (about 10x at ~96 phones). **Low-frequency emissions (ICE, marine engines) propagate far with
-little air absorption**, which is why those classes are already heard for kilometers; there CoHear
-adds gain and a tighter fix, and terrain and line of sight govern at km scale. Only the
-high-frequency classes (the FPV whine, ~2-8 kHz) are truly air-absorption-limited, which tempers
-their top end. The longer figures are optimistic ceilings.
+\* Each CoHear figure is the single-sensor range times `√48 ≈ 6.9` (array gain in the weak-signal
+regime); scale to other counts by `√N` (about 10x at ~96 phones). **Low-frequency emissions (ICE,
+marine engines) propagate far with little air absorption**, so the model extends them a long way,
+the km-plus figures are optimistic ceilings, and for low-altitude sources terrain and line of sight
+bound them further. The high-frequency FPV whine (~2-8 kHz) is air-absorption-limited, so treat its
+figure as an upper bound too. Field metering is needed to pin the real numbers.
 
 Frequency compounds the range story. Low-frequency engine noise (ICE, marine) barely attenuates
 in air, which is why the loud ICE classes are heard for kilometers; the high-pitched kHz whine of a
