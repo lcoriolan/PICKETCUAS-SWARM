@@ -46,6 +46,33 @@ awareness app). **DF** = direction finding (estimating which way a sound came fr
   radios ("gentle mode") so the acoustic clock stays in sync, and hands SNOOPY its
   acoustic drone detections so they can be cross-checked against Remote ID.
 
+## Free version vs. production
+
+This is the **free version**, and it is genuinely useful on its own: on-device
+classification, a live acoustic bearing, and, with the open reference server, multi-device
+cross-fixing on a map. It's free for noncommercial use, and it's meant to be used. The
+production PICKET stack is a large step up in sensitivity, accuracy, scale, and
+robustness. Side by side:
+
+| Capability | Free (this repo) | Production PICKET |
+|---|---|---|
+| **Use / license** | Noncommercial (PolyForm Noncommercial 1.0.0) | Commercial & operational deployment (licensed) |
+| **On-device detection + classification** | Yes: 7-class acoustic classifier on the phone | Yes: tuned, expanded class set, continuously improved |
+| **Single-device bearing** | Yes: two-mic acoustic bearing | Yes: multi-mic, calibrated, higher accuracy |
+| **Multi-device fusion** | Report-level: crosses independent per-phone bearings | Coherent, sensor-level: devices combined into one array |
+| **Localization** | Bearing cross-fix (triangulation) on the reference server | Certified localization, materially better accuracy and reliability |
+| **Sensing modalities** | Acoustic | Acoustic + passive RF, multi-modal |
+| **Sensors supported** | COTS Android phones | COTS phones + purpose-built PICKET nodes and long-range sensors |
+| **Scale** | Demo-grade: a handful of phones on one host, single process | Horizontal scale: large, self-healing meshes |
+| **Server** | Bare-bones open reference server (in this repo) | Full PICKET Fusion engine (not in this repo) |
+| **Persistence / evidence** | None (in-memory, ephemeral) | Persistent, evidence-grade logging and replay |
+| **Field hardening** | None (evaluation only) | Hardened for degraded, denied, and contested environments |
+| **ATAK / CoT** | Yes: fused contacts to the map | Yes, extended integration |
+| **Support** | Community / GitHub issues | Commercial support, integration, and SLAs |
+
+The free version proves the interface and lets you see it work. The production version is
+what you deploy. Open a "Commercial license inquiry" issue to talk deployment.
+
 ## Distributed acoustic array (what SWARM is for)
 
 A single phone gives you classification and a bearing. The point of PICKET SWARM is
@@ -294,33 +321,6 @@ displays the third-party-signed indicator for such plugins.
   never self-starts on boot).
 - Full multi-node capability (correlation, localization) requires a PICKET Fusion
   server; standalone phones get the local cue and classification only.
-
-## Free version vs. production
-
-This is the **free version**, and it is genuinely useful on its own: on-device
-classification, a live acoustic bearing, and, with the open reference server, multi-device
-cross-fixing on a map. It's free for noncommercial use, and it's meant to be used. The
-production PICKET stack is a large step up in sensitivity, accuracy, scale, and
-robustness. Side by side:
-
-| Capability | Free (this repo) | Production PICKET |
-|---|---|---|
-| **Use / license** | Noncommercial (PolyForm Noncommercial 1.0.0) | Commercial & operational deployment (licensed) |
-| **On-device detection + classification** | Yes: 7-class acoustic classifier on the phone | Yes: tuned, expanded class set, continuously improved |
-| **Single-device bearing** | Yes: two-mic acoustic bearing | Yes: multi-mic, calibrated, higher accuracy |
-| **Multi-device fusion** | Report-level: crosses independent per-phone bearings | Coherent, sensor-level: devices combined into one array |
-| **Localization** | Bearing cross-fix (triangulation) on the reference server | Certified localization, materially better accuracy and reliability |
-| **Sensing modalities** | Acoustic | Acoustic + passive RF, multi-modal |
-| **Sensors supported** | COTS Android phones | COTS phones + purpose-built PICKET nodes and long-range sensors |
-| **Scale** | Demo-grade: a handful of phones on one host, single process | Horizontal scale: large, self-healing meshes |
-| **Server** | Bare-bones open reference server (in this repo) | Full PICKET Fusion engine (not in this repo) |
-| **Persistence / evidence** | None (in-memory, ephemeral) | Persistent, evidence-grade logging and replay |
-| **Field hardening** | None (evaluation only) | Hardened for degraded, denied, and contested environments |
-| **ATAK / CoT** | Yes: fused contacts to the map | Yes, extended integration |
-| **Support** | Community / GitHub issues | Commercial support, integration, and SLAs |
-
-The free version proves the interface and lets you see it work. The production version is
-what you deploy. Open a "Commercial license inquiry" issue to talk deployment.
 
 ## Legal / usage
 
