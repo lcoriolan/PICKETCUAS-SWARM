@@ -152,22 +152,42 @@ short range is set by both its low level and its rapidly-absorbed band. PICKET p
 rotor/blade-rate tonals out of that band (DEMON/LOFAR-style) even when wind masks the low end, and
 coherent combining then extends the reach as more ears join.
 
-### Other battlefield sounds (published-literature estimates, illustrative)
+### Other battlefield sounds, and distributed counter-battery
 
-SWARM's classifier also flags gunfire, explosions, vehicles, aircraft, and voice. We have not
-metered these ourselves, so the figures below are **published-literature typical ranges for a
-single acoustic sensor, illustrative only** and are NOT from PICKET's model or measurements.
-Impulsive sources (muzzle blast, detonations) do not follow the drone free-field model, and
-real ranges swing widely with the weapon, terrain, wind, and atmosphere.
+SWARM's classifier also flags gunfire, explosions, vehicles, aircraft, and voice. Single-sensor
+detection ranges below are **published-literature typical figures, illustrative only**, NOT from
+PICKET's model or measurements; impulsive sources (muzzle blast, detonations) do not follow the
+drone free-field model and swing widely with weapon, terrain, wind, and atmosphere. For these loud,
+already-long sources the multi-node payoff is not more range, it is **location**: the network
+multilaterates the event (muzzle blast, shockwave, impact) to a point on the map.
 
-| Source | Character | Illustrative single-sensor range |
-|---|---|---|
-| Small-arms gunfire | very loud, impulsive | ~1-2 km |
-| Heavy weapons / autocannon | very loud, impulsive | ~2-4 km |
-| Artillery / mortar / explosions | extreme, impulsive | ~5-15+ km |
-| Armored vehicle / engine | loud, continuous | ~0.3-1 km |
-| Low helicopter / aircraft | loud, continuous | ~2-5 km |
-| Human speech (conversational) | quiet | ~10-50 m |
+| Source | Character | Single-sensor range | With CoHear (multi-node)* |
+|---|---|---|---|
+| Small-arms gunfire | very loud, impulsive | ~1-2 km | shooter fix ~10-25 m |
+| Heavy weapons / autocannon | very loud, impulsive | ~2-4 km | firing point ~tens of m |
+| Artillery / mortar / explosions | extreme, impulsive | ~5-15+ km | firing point / impact ~50-100 m |
+| Armored vehicle / engine | loud, continuous | ~0.3-1 km | located and tracked |
+| Low helicopter / aircraft | loud, continuous | ~2-5 km | bearing / track fix |
+| Human speech (conversational) | quiet | ~10-50 m | ~70-350 m (√N reach) |
+
+\* Multi-node acoustic localization by TDOA multilateration of the muzzle blast, shockwave, or impact.
+Fix figures are published-literature-typical for gunshot/sound-ranging systems, illustrative, not
+PICKET-metered. Loud already-long sources gain a location, not more range; the one quiet short-range
+source (speech) instead gains range by `√N`.
+
+### Distributed counter-battery
+
+That last column is a weapon-locating capability. Because the swarm timestamps the same report across
+nodes, it can multilaterate the **muzzle blast and supersonic shockwave** of small arms and heavy
+weapons, and the **point of origin and impact** of mortars, artillery, and rockets, the same
+principle as classic acoustic sound-ranging and modern gunshot locators, but built from commodity
+phones dispersed across the ground. The result is a near-real-time **counter-battery cue**: a hostile
+firing position on the ATAK map fast enough to hand to counterfire, with the impact point alongside
+it. It is **passive** (nothing for the enemy to detect or jam), it **self-heals** as nodes drop, and
+it **densifies** by adding devices, no dedicated array or radar. The report-level timing and cross-fix
+are in the open reference; the precision alignment and firing-solution logic that turn it into a
+metered counter-battery fix are production (see the extension points), and real accuracy needs field
+validation.
 
 ### Inter-node spread matters
 
