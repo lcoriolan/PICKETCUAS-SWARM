@@ -143,13 +143,14 @@ the km-plus figures are optimistic ceilings, and for low-altitude sources terrai
 bound them further. The high-frequency FPV whine (~2-8 kHz) is air-absorption-limited, so treat its
 figure as an upper bound too. Field metering is needed to pin the real numbers.
 
-Frequency compounds the range story. Low-frequency engine noise (ICE, marine) barely attenuates
-in air, which is why the loud ICE classes are heard for kilometers; the high-pitched kHz whine of a
-small electric FPV is absorbed fast, so its short range is set by *both* its low level *and* its high
-band, the double reason FPVs are the hard target. PICKET pulls the rotor/blade-rate tonals out of
-that band (DEMON/LOFAR-style) even when wind masks the low end, and coherent combining then turns the
-FPV's ~80-100 m single-phone range into hundreds of meters as the cluster grows. Loud, long-range
-classes are already absorption-limited, so more ears tighten the **bearing and fix**, not the range.
+**A drone's low-frequency emissions travel much farther than its high-frequency sound.** Air absorbs
+high frequencies quickly and low frequencies hardly at all, so a drone's deep engine and rotor tones
+carry for kilometers while its high-pitched whine dies off fast over the same air. That is why the
+loud, low-band classes (ICE engines, marine) are detected far and keep scaling as the swarm grows,
+and why a small electric FPV is the hard target: it is quiet *and* high-pitched (~2-8 kHz), so its
+short range is set by both its low level and its rapidly-absorbed band. PICKET pulls the
+rotor/blade-rate tonals out of that band (DEMON/LOFAR-style) even when wind masks the low end, and
+coherent combining then extends the reach as more ears join.
 
 ### Other battlefield sounds (published-literature estimates, illustrative)
 
