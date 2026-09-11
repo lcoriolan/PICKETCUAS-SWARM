@@ -98,7 +98,45 @@ and field tuning that make it robust at scale) is not in this repository.
 repository (a "CoHear demo request"). We are glad to show coherent combining running on real
 nodes end to end.
 
-## Listening range and coherent scale
+### Beamforming
+
+The combine is coherent (sub-sample GCC-PHAT alignment, not averaged reports), so CoHear steers
+a beam toward the source. The same step that lifts a weak signal also sharpens its bearing, so
+more ears mean longer reach **and** a tighter fix at the same time.
+
+### Coherent noise cancellation: filtering the ambient
+
+A coherent array does not just add signal, it **filters the ambient**, and that is the direct answer
+to the "a battlefield is loud" limit on detection range: it pushes the noise floor down instead of
+just tolerating it. It works three ways.
+
+- **Uncorrelated noise averages away.** The source arrives coherently at every node, but each node's
+  ambient, wind, distant hum, general din, is different, so summing the aligned clips cancels the
+  uncorrelated part and the noise falls as `√N` relative to the signal. That is the array gain, and
+  it is why more ears help most exactly when it is loud.
+- **Directional interferers get nulled.** When one loud source dominates (a generator, a road, an
+  idling engine), adaptive beamforming (MVDR / Capon) steers a spatial null onto its direction and
+  rejects it while holding the beam on the target, something no single microphone can do.
+- **Reference-channel subtraction.** Nodes far from the target hear mostly the shared ambient, so
+  they can act as noise references to subtract the correlated background from the nodes on the
+  target (classic adaptive noise cancellation).
+
+Together these raise the effective signal-to-noise ratio and let detection reach through clutter
+that would swamp any single phone. The inherent `√N` uncorrelated-noise gain is the validated part;
+the directional null-steering and reference subtraction are standard adaptive-array techniques the
+beamforming path supports (see the extension points), not separately benchmarked here.
+
+### Inter-node spread matters
+
+Coherent scale is not just node *count*, it is node *spacing*. PICKET seeds nodes at roughly
+**70-120 m** apart (tighter on the danger avenues, looser across open ground), so any mover is
+heard by at least three ears. A wider spread gives a bigger aperture and a sharper fix; too
+wide and a given source is not co-heard by enough nodes to combine coherently. Because the
+combine is timing-based, timing spread matters too: in simulation CoHear holds about **9.5 dB
+of gain at 0.5 ms** of inter-node jitter and about **5 dB at 1.3 ms**, which is why it works on
+ordinary software-clocked phones with no shared hardware clock.
+
+## Range and scale
 
 CoHear's array gain (`10·log10(N)`) turns into detection range as about `√N` in the weak-signal
 regime, the clean **spreading-only law, before air absorption**: roughly 4x more coherent phones
@@ -120,8 +158,11 @@ local cluster more phones add **coverage**, not **range**. That is the practical
 diminishing-returns point for a single source.
 
 \* Spreading-only `√N`: array gain versus distance with **no air absorption**, a clean upper-bound
-law. Real reach is lower once frequency-dependent absorption is folded in, sharply so for
-high-pitched sources; the by-drone-class table below gives the absorption-aware numbers.
+law. Real reach is lower once frequency-dependent absorption is folded in (sharply for high-pitched
+sources), see the by-drone-class table below. All figures also assume a quiet ambient floor, and
+**every +6 dB of ambient roughly halves the range** (wind adds ~10-20 dB, and a battlefield is far
+from quiet), so treat them as best-case-quiet ceilings, exactly what the coherent noise cancellation
+above is built to push back on.
 
 ### By drone class: single sensor vs CoHear (modeled)
 
@@ -129,7 +170,7 @@ A "drone" is not one sound: a two-stroke Shahed and a whisper-quiet electric FPV
 about 30 dB (roughly 30x in range), and they sit in different parts of the spectrum, heavy ICE
 engines dominate the low end while small electric rotors scream up in the kHz. This is what CoHear
 coherent combining reaches per class, one phone versus a swarm, from PICKET's threat model
-(`SPL(r) = SPL@1m - 20*log10(r)`, coherent reach scales as `√N`):
+(`SPL(r) = SPL@1m - 20*log10(r)`):
 
 | Class (example) | SPL@1m | Acoustic signature (modeled) | 1 sensor | With CoHear (~48 sensors)* |
 |---|---|---|---|---|
@@ -158,7 +199,7 @@ short range is set by both its low level and its rapidly-absorbed band. PICKET p
 rotor/blade-rate tonals out of that band (DEMON/LOFAR-style) even when wind masks the low end, and
 coherent combining then extends the reach as more ears join.
 
-### Other battlefield sounds, and distributed counter-battery
+### Other battlefield sounds
 
 SWARM's classifier also flags gunfire, explosions, vehicles, aircraft, and voice, and a swarm both
 hears them a long way off **and** locates them. Single-sensor ranges are **published-literature
@@ -193,54 +234,6 @@ counterfire. It is **passive** (nothing to detect or jam), **self-heals** as nod
 **densifies** by adding devices, no dedicated array or radar. Report-level timing and cross-fix are in
 the open reference; the precision alignment and firing-solution logic that turn it into a metered
 counter-battery fix are production (see the extension points), and real accuracy needs field validation.
-
-### Inter-node spread matters
-
-Coherent scale is not just node *count*, it is node *spacing*. PICKET seeds nodes at roughly
-**70-120 m** apart (tighter on the danger avenues, looser across open ground), so any mover is
-heard by at least three ears. A wider spread gives a bigger aperture and a sharper fix; too
-wide and a given source is not co-heard by enough nodes to combine coherently. Because the
-combine is timing-based, timing spread matters too: in simulation CoHear holds about **9.5 dB
-of gain at 0.5 ms** of inter-node jitter and about **5 dB at 1.3 ms**, which is why it works on
-ordinary software-clocked phones with no shared hardware clock.
-
-### Beamforming
-
-The combine is coherent (sub-sample GCC-PHAT alignment, not averaged reports), so CoHear steers
-a beam toward the source. The same step that lifts a weak signal also sharpens its bearing, so
-more ears mean longer reach **and** a tighter fix at the same time.
-
-### Coherent noise cancellation: filtering the ambient
-
-A coherent array does not just add signal, it **filters the ambient**, and that is the direct answer
-to the "a battlefield is loud" limit on detection range: it pushes the noise floor down instead of
-just tolerating it. It works three ways.
-
-- **Uncorrelated noise averages away.** The source arrives coherently at every node, but each node's
-  ambient, wind, distant hum, general din, is different, so summing the aligned clips cancels the
-  uncorrelated part and the noise falls as `√N` relative to the signal. That is the array gain, and
-  it is why more ears help most exactly when it is loud.
-- **Directional interferers get nulled.** When one loud source dominates (a generator, a road, an
-  idling engine), adaptive beamforming (MVDR / Capon) steers a spatial null onto its direction and
-  rejects it while holding the beam on the target, something no single microphone can do.
-- **Reference-channel subtraction.** Nodes far from the target hear mostly the shared ambient, so
-  they can act as noise references to subtract the correlated background from the nodes on the
-  target (classic adaptive noise cancellation).
-
-Together these raise the effective signal-to-noise ratio and let detection reach through clutter
-that would swamp any single phone. The inherent `√N` uncorrelated-noise gain is the validated part;
-the directional null-steering and reference subtraction are standard adaptive-array techniques the
-beamforming path supports (see the extension points), not separately benchmarked here.
-
-\* Modeled projection, not hardware-measured, and **set by the ambient noise floor.** Detection
-happens where the source level clears the local noise, so range scales inversely with that
-floor: these figures assume a quiet ~30 dB floor, and **every +6 dB of ambient roughly halves
-the range.** Wind alone adds ~10-20 dB, and a live battlefield is nowhere near quiet, so treat
-these as best-case-quiet ceilings, not field guarantees. The array's job is partly to fight
-this: coherent gain raises the effective floor margin, which is why more ears help most exactly
-when it is noisy. Uses the `10·log10(N)` / `√N` array law (validated in simulation through 12
-nodes) on a modeled ~80 m single-phone baseline (propulsion-class SPL estimate). Real range
-depends on the source, the ambient noise floor, wind, and terrain.
 
 ## At scale: a distributed array on the phones you already have
 
@@ -327,17 +320,16 @@ robustness. Side by side:
 | **Support** | Community / GitHub issues | Commercial support, integration, and SLAs |
 
 The free version proves the interface and lets you see it work. The production version is
-what you deploy. See [`COMMERCIAL.md`](./COMMERCIAL.md) or open a "Commercial license
-inquiry" issue.
+what you deploy. Open a "Commercial license inquiry" issue to talk deployment.
 
 ## Legal / usage
 
 ATAK-CIV is a U.S. Government product released open source and classified EAR99.
 Use of this plugin must comply with your organization's authority to operate and
 all applicable laws on audio capture in your jurisdiction. This plugin performs
-passive acoustic sensing only; it commands no effectors.
-
-License: not yet finalized; the released APK is free to download and use, all other rights reserved for now.
+passive acoustic sensing only; it commands no effectors. Free for noncommercial use
+(evaluation, research, personal); commercial or operational deployment requires a
+separate license.
 
 ## Contact
 
