@@ -154,40 +154,39 @@ coherent combining then extends the reach as more ears join.
 
 ### Other battlefield sounds, and distributed counter-battery
 
-SWARM's classifier also flags gunfire, explosions, vehicles, aircraft, and voice. Single-sensor
-detection ranges below are **published-literature typical figures, illustrative only**, NOT from
-PICKET's model or measurements; impulsive sources (muzzle blast, detonations) do not follow the
-drone free-field model and swing widely with weapon, terrain, wind, and atmosphere. For these loud,
-already-long sources the multi-node payoff is not more range, it is **location**: the network
-multilaterates the event (muzzle blast, shockwave, impact) to a point on the map.
+SWARM's classifier also flags gunfire, explosions, vehicles, aircraft, and voice, and a swarm both
+hears them a long way off **and** locates them. Single-sensor ranges are **published-literature
+typical figures, illustrative only**, NOT PICKET-metered:
 
-| Source | Character | Single-sensor range | With CoHear (multi-node)* |
+| Source | 1 sensor | Heard with CoHear (~48)* | Located to within** |
 |---|---|---|---|
-| Small-arms gunfire | very loud, impulsive | ~1-2 km | shooter fix ~10-25 m |
-| Heavy weapons / autocannon | very loud, impulsive | ~2-4 km | firing point ~tens of m |
-| Artillery / mortar / explosions | extreme, impulsive | ~5-15+ km | firing point / impact ~50-100 m |
-| Armored vehicle / engine | loud, continuous | ~0.3-1 km | located and tracked |
-| Low helicopter / aircraft | loud, continuous | ~2-5 km | bearing / track fix |
-| Human speech (conversational) | quiet | ~10-50 m | ~70-350 m (√N reach) |
+| Small-arms gunfire | ~1-2 km | ~7-14 km | ~10-25 m |
+| Heavy weapons / autocannon | ~2-4 km | ~14-28 km | ~tens of m |
+| Artillery / mortar / explosions | ~5-15+ km | ~35-100+ km | ~50-100 m (firing point + impact) |
+| Armored vehicle / engine | ~0.3-1 km | ~2-7 km | ~50-150 m (track) |
+| Low helicopter / aircraft | ~2-5 km | ~14-35 km | bearing / track fix |
+| Human speech (conversational) | ~10-50 m | ~70-350 m | ~a few m (if several hear it) |
 
-\* Multi-node acoustic localization by TDOA multilateration of the muzzle blast, shockwave, or impact.
-Fix figures are published-literature-typical for gunshot/sound-ranging systems, illustrative, not
-PICKET-metered. Loud already-long sources gain a location, not more range; the one quiet short-range
-source (speech) instead gains range by `√N`.
+\* Heard = single-sensor range times `√48 ≈ 6.9`. These sources are loud and low-frequency, and low
+frequency barely attenuates, so the reach is genuinely long (large blasts are detected at tens to
+hundreds of km via low-frequency and infrasound propagation); the longest figures are optimistic
+ceilings that lean on favorable atmosphere and on capturing the low band (commodity phone mics do that
+only partly), and terrain and the horizon vary.
+\*\* Located = TDOA multilateration across the nodes that hear it; fix figures are published-literature
+typical for gunshot and sound-ranging systems, illustrative, not PICKET-metered.
 
 ### Distributed counter-battery
 
-That last column is a weapon-locating capability. Because the swarm timestamps the same report across
-nodes, it can multilaterate the **muzzle blast and supersonic shockwave** of small arms and heavy
-weapons, and the **point of origin and impact** of mortars, artillery, and rockets, the same
-principle as classic acoustic sound-ranging and modern gunshot locators, but built from commodity
-phones dispersed across the ground. The result is a near-real-time **counter-battery cue**: a hostile
-firing position on the ATAK map fast enough to hand to counterfire, with the impact point alongside
-it. It is **passive** (nothing for the enemy to detect or jam), it **self-heals** as nodes drop, and
-it **densifies** by adding devices, no dedicated array or radar. The report-level timing and cross-fix
-are in the open reference; the precision alignment and firing-solution logic that turn it into a
-metered counter-battery fix are production (see the extension points), and real accuracy needs field
-validation.
+A swarm does not just hear these far, it **locates** them. By timestamping the same event across nodes
+and multilaterating the **muzzle blast and supersonic shockwave** (small arms, heavy weapons) or the
+**point of origin and impact** (mortars, artillery, rockets), it fixes a hostile firing position to
+within tens of meters, the same principle as classic acoustic sound-ranging and modern gunshot
+locators, but built from commodity phones dispersed across the ground. That is a near-real-time
+**counter-battery cue** on the ATAK map, firing position plus impact point, ready to hand to
+counterfire. It is **passive** (nothing to detect or jam), **self-heals** as nodes drop, and
+**densifies** by adding devices, no dedicated array or radar. Report-level timing and cross-fix are in
+the open reference; the precision alignment and firing-solution logic that turn it into a metered
+counter-battery fix are production (see the extension points), and real accuracy needs field validation.
 
 ### Inter-node spread matters
 
