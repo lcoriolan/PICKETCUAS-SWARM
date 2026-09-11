@@ -299,13 +299,13 @@ displays the third-party-signed indicator for such plugins.
 
 This is the **free version**, and it is genuinely useful on its own: on-device
 classification, a live acoustic bearing, and, with the open reference server, multi-device
-cross-fixing on a map. It's open source (Apache-2.0), and it's meant to be used. The
+cross-fixing on a map. It's free for noncommercial use, and it's meant to be used. The
 production PICKET stack is a large step up in sensitivity, accuracy, scale, and
 robustness. Side by side:
 
 | Capability | Free (this repo) | Production PICKET |
 |---|---|---|
-| **Use / license** | Open source, Apache-2.0 (commercial use OK) | Commercial license for the production engine |
+| **Use / license** | Noncommercial (PolyForm Noncommercial 1.0.0) | Commercial & operational deployment (licensed) |
 | **On-device detection + classification** | Yes: 7-class acoustic classifier on the phone | Yes: tuned, expanded class set, continuously improved |
 | **Single-device bearing** | Yes: two-mic acoustic bearing | Yes: multi-mic, calibrated, higher accuracy |
 | **Multi-device fusion** | Report-level: crosses independent per-phone bearings | Coherent, sensor-level: devices combined into one array |
@@ -327,9 +327,9 @@ what you deploy. Open a "Commercial license inquiry" issue to talk deployment.
 ATAK-CIV is a U.S. Government product released open source and classified EAR99.
 Use of this plugin must comply with your organization's authority to operate and
 all applicable laws on audio capture in your jurisdiction. This plugin performs
-passive acoustic sensing only; it commands no effectors. This plugin is licensed under the
-**Apache License 2.0** (see `LICENSE`), free and open for any use including commercial; the
-production PICKET engine is a separate product and separately licensed.
+passive acoustic sensing only; it commands no effectors. This plugin is source-available under the
+**PolyForm Noncommercial License 1.0.0** (see `LICENSE`), free for noncommercial use (evaluation,
+research, personal); commercial or operational deployment requires a separate license.
 
 ## Contact
 
