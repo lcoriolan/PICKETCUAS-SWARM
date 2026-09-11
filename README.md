@@ -121,23 +121,28 @@ diminishing-returns point for a single source.
 ### By drone class (single sensor, modeled)
 
 A "drone" is not one sound: a two-stroke Shahed and a whisper-quiet electric FPV differ by
-about 30 dB, which is roughly 30x in range. Modeled single-sensor detection ranges, from
-PICKET's threat model (`SPL(r) = SPL@1m - 20*log10(r)`):
+about 30 dB (roughly 30x in range), and they sit in different parts of the spectrum, heavy ICE
+engines dominate the low end while small electric rotors scream up in the kHz. Modeled
+single-sensor detection ranges and acoustic-signature bands, from PICKET's threat model
+(`SPL(r) = SPL@1m - 20*log10(r)`):
 
-| Class (example) | SPL@1m | Single-sensor range | Coherent effect |
-|---|---|---|---|
-| Naval USV (Magura V5) | ~98 dB | ~3.8 km | already long: combining sharpens the fix |
-| One-way attack (Shahed-136) | ~98 dB | ~2.5 km | already long: combining sharpens the fix |
-| MALE (Bayraktar TB2) | ~88 dB | ~795 m | mostly fix, modest reach gain |
-| Recon (Orlan-10) | ~84 dB | ~500 m | weak-signal: reach scales `√N` |
-| Loiter munition (Lancet-3) | ~78 dB | ~250 m | weak-signal: reach scales `√N` |
-| FPV quad | ~70 dB | ~100 m | weak-signal: `√N` (about ~690 m at 48 phones) |
-| Quiet / fiber-optic FPV | ~68 dB | ~80 m | weak-signal: `√N` (about ~800 m at ~100 phones) |
+| Class (example) | SPL@1m | Acoustic signature (modeled) | Single-sensor range | Coherent effect |
+|---|---|---|---|---|
+| Naval USV (Magura V5) | ~98 dB | marine engine, ~50-300 Hz (low) | ~3.8 km | already long: combining sharpens the fix |
+| One-way attack (Shahed-136) | ~98 dB | two-stroke buzz, ~80-300 Hz + harmonics | ~2.5 km | already long: combining sharpens the fix |
+| MALE (Bayraktar TB2) | ~88 dB | prop + engine, ~100-500 Hz | ~795 m | mostly fix, modest reach gain |
+| Recon (Orlan-10) | ~84 dB | small ICE buzz, ~150-600 Hz | ~500 m | weak-signal: reach scales `√N` |
+| Loiter munition (Lancet-3) | ~78 dB | electric pusher, ~200 Hz-2 kHz | ~250 m | weak-signal: reach scales `√N` |
+| FPV quad | ~70 dB | multirotor whine, ~2-8 kHz (blade-rate comb) | ~100 m | weak-signal: `√N` (about ~690 m at 48 phones) |
+| Quiet / fiber-optic FPV | ~68 dB | high whine, ~2-8 kHz, fainter | ~80 m | weak-signal: `√N` (about ~800 m at ~100 phones) |
 
-The quiet, low-flying FPV is the hard target, and it is exactly where coherent combining helps
-most: it turns a ~80-100 m single-phone range into hundreds of meters as the cluster grows.
-Loud, long-range classes are already limited by air absorption rather than SNR, so more ears
-tighten the **bearing and fix** instead of extending the range.
+Frequency compounds the range story. Low-frequency engine noise (ICE, marine) barely attenuates
+in air, which is why the loud ICE classes are heard for kilometers; the high-pitched kHz whine of a
+small electric FPV is absorbed fast, so its short range is set by *both* its low level *and* its high
+band, the double reason FPVs are the hard target. PICKET pulls the rotor/blade-rate tonals out of
+that band (DEMON/LOFAR-style) even when wind masks the low end, and coherent combining then turns the
+FPV's ~80-100 m single-phone range into hundreds of meters as the cluster grows. Loud, long-range
+classes are already absorption-limited, so more ears tighten the **bearing and fix**, not the range.
 
 ### Other battlefield sounds (published-literature estimates, illustrative)
 
