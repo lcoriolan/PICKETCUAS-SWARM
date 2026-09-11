@@ -210,19 +210,27 @@ The combine is coherent (sub-sample GCC-PHAT alignment, not averaged reports), s
 a beam toward the source. The same step that lifts a weak signal also sharpens its bearing, so
 more ears mean longer reach **and** a tighter fix at the same time.
 
-### Distributed noise cancellation
+### Coherent noise cancellation: filtering the ambient
 
-A coherent array does not just add signal, it subtracts noise. The source arrives coherently at
-every node while each node's ambient does not, so combining cancels the uncorrelated part of the
-noise. That is the array gain, and it is exactly why more ears help most when the environment is
-loud: the noise-floor limit above is what a distributed array is built to push back on.
+A coherent array does not just add signal, it **filters the ambient**, and that is the direct answer
+to the "a battlefield is loud" limit on detection range: it pushes the noise floor down instead of
+just tolerating it. It works three ways.
 
-Beyond that inherent gain, when a single loud interferer dominates (a generator, a road, a
-nearby engine), adaptive beamforming (MVDR / Capon) can steer a spatial null onto that direction
-and reject it while holding the main beam on the target. Spatially separated ears are what make
-this possible: a distributed array can null noise that no single microphone ever could. (The
-inherent uncorrelated-noise gain is the validated part; directional null-steering is standard
-adaptive-array processing that the beamforming path supports.)
+- **Uncorrelated noise averages away.** The source arrives coherently at every node, but each node's
+  ambient, wind, distant hum, general din, is different, so summing the aligned clips cancels the
+  uncorrelated part and the noise falls as `√N` relative to the signal. That is the array gain, and
+  it is why more ears help most exactly when it is loud.
+- **Directional interferers get nulled.** When one loud source dominates (a generator, a road, an
+  idling engine), adaptive beamforming (MVDR / Capon) steers a spatial null onto its direction and
+  rejects it while holding the beam on the target, something no single microphone can do.
+- **Reference-channel subtraction.** Nodes far from the target hear mostly the shared ambient, so
+  they can act as noise references to subtract the correlated background from the nodes on the
+  target (classic adaptive noise cancellation).
+
+Together these raise the effective signal-to-noise ratio and let detection reach through clutter
+that would swamp any single phone. The inherent `√N` uncorrelated-noise gain is the validated part;
+the directional null-steering and reference subtraction are standard adaptive-array techniques the
+beamforming path supports (see the extension points), not separately benchmarked here.
 
 \* Modeled projection, not hardware-measured, and **set by the ambient noise floor.** Detection
 happens where the source level clears the local noise, so range scales inversely with that
