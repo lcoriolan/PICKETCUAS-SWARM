@@ -128,20 +128,21 @@ coherent combining reaches per class, one phone versus a swarm, from PICKET's th
 
 | Class (example) | SPL@1m | Acoustic signature (modeled) | 1 sensor | With CoHear (~48 sensors)* |
 |---|---|---|---|---|
-| Naval USV (Magura V5) | ~98 dB | marine engine, ~50-300 Hz | ~3.8 km | ~26 km |
-| One-way attack (Shahed-136) | ~98 dB | two-stroke buzz, ~80-300 Hz | ~2.5 km | ~17 km |
-| MALE (Bayraktar TB2) | ~88 dB | prop + engine, ~100-500 Hz | ~795 m | ~5.5 km |
-| Recon (Orlan-10) | ~84 dB | small ICE buzz, ~150-600 Hz | ~500 m | ~3.5 km |
-| Loiter munition (Lancet-3) | ~78 dB | electric pusher, ~200 Hz-2 kHz | ~250 m | ~1.7 km |
-| FPV quad | ~70 dB | multirotor whine, ~2-8 kHz (blade-rate comb) | ~100 m | ~690 m |
-| Quiet / fiber-optic FPV | ~68 dB | high whine, ~2-8 kHz | ~80 m | ~555 m |
+| Naval USV (Magura V5) | ~98 dB | marine engine, ~50-300 Hz | ~3.8 km | ~14 km |
+| One-way attack (Shahed-136) | ~98 dB | two-stroke buzz, ~80-300 Hz | ~2.5 km | ~11 km |
+| MALE (Bayraktar TB2) | ~88 dB | prop + engine, ~100-500 Hz | ~795 m | ~4 km |
+| Recon (Orlan-10) | ~84 dB | small ICE buzz, ~150-600 Hz | ~500 m | ~2.5 km |
+| Loiter munition (Lancet-3) | ~78 dB | electric pusher, ~200 Hz-2 kHz | ~250 m | ~1.1 km |
+| FPV quad | ~70 dB | multirotor whine, ~2-8 kHz (blade-rate comb) | ~100 m | ~320 m |
+| Quiet / fiber-optic FPV | ~68 dB | high whine, ~2-8 kHz | ~80 m | ~280 m |
 
-\* Each CoHear figure is the single-sensor range times `√48 ≈ 6.9` (array gain in the weak-signal
-regime); scale to other counts by `√N` (about 10x at ~96 phones). **Low-frequency emissions (ICE,
-marine engines) propagate far with little air absorption**, so the model extends them a long way,
-the km-plus figures are optimistic ceilings, and for low-altitude sources terrain and line of sight
-bound them further. The high-frequency FPV whine (~2-8 kHz) is air-absorption-limited, so treat its
-figure as an upper bound too. Field metering is needed to pin the real numbers.
+\* CoHear figures apply the ~48-node array gain (~17 dB) with **both** spherical spreading **and**
+frequency-dependent air absorption (`α`), not a flat `√N` (which would be `6.9x` and ignores
+absorption). **Low-frequency classes (ICE, marine, ~50-300 Hz) attenuate little (`α` well under
+1 dB/km), so the gain reaches far**; the high-frequency FPV whine (~2-8 kHz) is absorbed fast
+(tens of dB/km), so the same gain buys far less, which is why the FPV barely doubles while the loud
+low-band classes stretch to kilometers. Modeled with representative `α` per band on literature/threat
+anchors, not PICKET-metered; terrain and line of sight bound low-altitude sources further.
 
 **A drone's low-frequency emissions travel much farther than its high-frequency sound.** Air absorbs
 high frequencies quickly and low frequencies hardly at all, so a drone's deep engine and rotor tones
@@ -160,18 +161,18 @@ typical figures, illustrative only**, NOT PICKET-metered:
 
 | Source | 1 sensor | Heard with CoHear (~48)* | Located to within** |
 |---|---|---|---|
-| Small-arms gunfire | ~1-2 km | ~7-14 km | ~10-25 m |
-| Heavy weapons / autocannon | ~2-4 km | ~14-28 km | ~tens of m |
-| Artillery / mortar / explosions | ~5-15+ km | ~35-100+ km | ~50-100 m (firing point + impact) |
-| Armored vehicle / engine | ~0.3-1 km | ~2-7 km | ~50-150 m (track) |
-| Low helicopter / aircraft | ~2-5 km | ~14-35 km | bearing / track fix |
-| Human speech (conversational) | ~10-50 m | ~70-350 m | ~a few m (if several hear it) |
+| Small-arms gunfire | ~1-2 km | ~4-6 km | ~10-25 m |
+| Heavy weapons / autocannon | ~2-4 km | ~7-12 km | ~tens of m |
+| Artillery / mortar / explosions | ~5-15+ km | ~20-40 km | ~50-100 m (firing point + impact) |
+| Armored vehicle / engine | ~0.3-1 km | ~2-5 km | ~50-150 m (track) |
+| Low helicopter / aircraft | ~2-5 km | ~8-15 km | bearing / track fix |
+| Human speech (conversational) | ~10-50 m | ~70-300 m | ~a few m (if several hear it) |
 
-\* Heard = single-sensor range times `√48 ≈ 6.9`. These sources are loud and low-frequency, and low
-frequency barely attenuates, so the reach is genuinely long (large blasts are detected at tens to
-hundreds of km via low-frequency and infrasound propagation); the longest figures are optimistic
-ceilings that lean on favorable atmosphere and on capturing the low band (commodity phone mics do that
-only partly), and terrain and the horizon vary.
+\* Heard = the range where the ~48-node array gain (~17 dB) still clears the noise floor, computed
+with **both** spherical spreading **and** frequency-dependent air absorption (`α`), not a flat `√N`.
+Low-frequency loud sources (artillery ~50-150 Hz, `α` well under 1 dB/km) attenuate little and reach
+far; higher-frequency content is absorbed fast, which caps the reach. Modeled with representative `α`
+on literature single-sensor anchors, not PICKET-metered; terrain, weather, and the horizon vary.
 \*\* Located = TDOA multilateration across the nodes that hear it; fix figures are published-literature
 typical for gunshot and sound-ranging systems, illustrative, not PICKET-metered.
 
