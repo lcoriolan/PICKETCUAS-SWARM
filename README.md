@@ -296,3 +296,9 @@ License: not yet finalized; the released APK is free to download and use, all ot
 ## Contact
 
 Bug reports and device-compatibility reports (which phones give you a bearing) via GitHub Issues.
+
+## PICKET family
+
+- [PICKET SNOOPY](https://github.com/lcoriolan/PICKETCUAS-SNOOPY): passive RF/ESM ATAK plugin (Wi-Fi/BLE survey + drone Remote ID).
+- [SWARM-DEVICE-AGNOSTIC](https://github.com/lcoriolan/SWARM-DEVICE-AGNOSTIC): web-based acoustic reference; any browser is a sensor node, inter-device TDOA fusion.
+- [SNOOPY-RF-FUSION](https://github.com/lcoriolan/SNOOPY-RF-FUSION): web-based RF fusion server that merges many devices' Wi-Fi/BLE reports into one picture.
