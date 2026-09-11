@@ -128,18 +128,20 @@ coherent combining reaches per class, one phone versus a swarm, from PICKET's th
 
 | Class (example) | SPL@1m | Acoustic signature (modeled) | 1 sensor | With CoHear (~48 sensors)* |
 |---|---|---|---|---|
-| Naval USV (Magura V5) | ~98 dB | marine engine, ~50-300 Hz | ~3.8 km | absorption-limited: CoHear sharpens the fix |
-| One-way attack (Shahed-136) | ~98 dB | two-stroke buzz, ~80-300 Hz | ~2.5 km | absorption-limited: CoHear sharpens the fix |
-| MALE (Bayraktar TB2) | ~88 dB | prop + engine, ~100-500 Hz | ~795 m | near the absorption limit: mostly fix |
+| Naval USV (Magura V5) | ~98 dB | marine engine, ~50-300 Hz | ~3.8 km | low freq carries far, already km-scale: CoHear adds gain and tightens the fix |
+| One-way attack (Shahed-136) | ~98 dB | two-stroke buzz, ~80-300 Hz | ~2.5 km | low freq carries far: CoHear adds gain and tightens the fix |
+| MALE (Bayraktar TB2) | ~88 dB | prop + engine, ~100-500 Hz | ~795 m | mid band: CoHear extends modestly, then mostly fix |
 | Recon (Orlan-10) | ~84 dB | small ICE buzz, ~150-600 Hz | ~500 m | ~3.5 km (low band carries) |
 | Loiter munition (Lancet-3) | ~78 dB | electric pusher, ~200 Hz-2 kHz | ~250 m | ~1.7 km |
 | FPV quad | ~70 dB | multirotor whine, ~2-8 kHz (blade-rate comb) | ~100 m | ~690 m (high-band absorption tempers) |
 | Quiet / fiber-optic FPV | ~68 dB | high whine, ~2-8 kHz | ~80 m | ~555 m |
 
 \* Coherent reach at ~48 phones (`√48 ≈ 6.9x`) in the weak-signal regime; scale to other counts by
-`√N` (about 10x at ~96 phones). Air absorption, worse at high frequency, caps the top end, so the
-longer figures are optimistic ceilings; the loud, already-long classes are absorption-limited, so
-CoHear tightens the bearing and fix rather than extending the range.
+`√N` (about 10x at ~96 phones). **Low-frequency emissions (ICE, marine engines) propagate far with
+little air absorption**, which is why those classes are already heard for kilometers; there CoHear
+adds gain and a tighter fix, and terrain and line of sight govern at km scale. Only the
+high-frequency classes (the FPV whine, ~2-8 kHz) are truly air-absorption-limited, which tempers
+their top end. The longer figures are optimistic ceilings.
 
 Frequency compounds the range story. Low-frequency engine noise (ICE, marine) barely attenuates
 in air, which is why the loud ICE classes are heard for kilometers; the high-pitched kHz whine of a
