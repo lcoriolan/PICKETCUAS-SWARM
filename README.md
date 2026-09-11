@@ -301,4 +301,4 @@ Bug reports and device-compatibility reports (which phones give you a bearing) v
 
 - [PICKET SNOOPY](https://github.com/lcoriolan/PICKETCUAS-SNOOPY): passive RF/ESM ATAK plugin (Wi-Fi/BLE survey + drone Remote ID).
 - [SWARM-DEVICE-AGNOSTIC](https://github.com/lcoriolan/SWARM-DEVICE-AGNOSTIC): web-based acoustic reference; any browser is a sensor node, inter-device TDOA fusion.
-- [SNOOPY-RF-FUSION](https://github.com/lcoriolan/SNOOPY-RF-FUSION): web-based RF fusion server that merges many devices' Wi-Fi/BLE reports into one picture.
+- [SNOOPY RF fusion server](https://github.com/lcoriolan/PICKETCUAS-SNOOPY/tree/main/rf-fusion-server): web-based server that merges many devices' Wi-Fi/BLE reports into one picture (in the SNOOPY repo).
