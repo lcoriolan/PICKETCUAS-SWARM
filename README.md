@@ -118,23 +118,28 @@ again), and only phones close enough to hear an event combine coherently for it,
 local cluster more phones add **coverage**, not **range**. That is the practical
 diminishing-returns point for a single source.
 
-### By drone class (single sensor, modeled)
+### By drone class: single sensor vs CoHear (modeled)
 
 A "drone" is not one sound: a two-stroke Shahed and a whisper-quiet electric FPV differ by
 about 30 dB (roughly 30x in range), and they sit in different parts of the spectrum, heavy ICE
-engines dominate the low end while small electric rotors scream up in the kHz. Modeled
-single-sensor detection ranges and acoustic-signature bands, from PICKET's threat model
-(`SPL(r) = SPL@1m - 20*log10(r)`):
+engines dominate the low end while small electric rotors scream up in the kHz. This is what CoHear
+coherent combining reaches per class, one phone versus a swarm, from PICKET's threat model
+(`SPL(r) = SPL@1m - 20*log10(r)`, coherent reach scales as `√N`):
 
-| Class (example) | SPL@1m | Acoustic signature (modeled) | Single-sensor range | Coherent effect |
+| Class (example) | SPL@1m | Acoustic signature (modeled) | 1 sensor | With CoHear (~48 sensors)* |
 |---|---|---|---|---|
-| Naval USV (Magura V5) | ~98 dB | marine engine, ~50-300 Hz (low) | ~3.8 km | already long: combining sharpens the fix |
-| One-way attack (Shahed-136) | ~98 dB | two-stroke buzz, ~80-300 Hz + harmonics | ~2.5 km | already long: combining sharpens the fix |
-| MALE (Bayraktar TB2) | ~88 dB | prop + engine, ~100-500 Hz | ~795 m | mostly fix, modest reach gain |
-| Recon (Orlan-10) | ~84 dB | small ICE buzz, ~150-600 Hz | ~500 m | weak-signal: reach scales `√N` |
-| Loiter munition (Lancet-3) | ~78 dB | electric pusher, ~200 Hz-2 kHz | ~250 m | weak-signal: reach scales `√N` |
-| FPV quad | ~70 dB | multirotor whine, ~2-8 kHz (blade-rate comb) | ~100 m | weak-signal: `√N` (about ~690 m at 48 phones) |
-| Quiet / fiber-optic FPV | ~68 dB | high whine, ~2-8 kHz, fainter | ~80 m | weak-signal: `√N` (about ~800 m at ~100 phones) |
+| Naval USV (Magura V5) | ~98 dB | marine engine, ~50-300 Hz | ~3.8 km | absorption-limited: CoHear sharpens the fix |
+| One-way attack (Shahed-136) | ~98 dB | two-stroke buzz, ~80-300 Hz | ~2.5 km | absorption-limited: CoHear sharpens the fix |
+| MALE (Bayraktar TB2) | ~88 dB | prop + engine, ~100-500 Hz | ~795 m | near the absorption limit: mostly fix |
+| Recon (Orlan-10) | ~84 dB | small ICE buzz, ~150-600 Hz | ~500 m | ~3.5 km (low band carries) |
+| Loiter munition (Lancet-3) | ~78 dB | electric pusher, ~200 Hz-2 kHz | ~250 m | ~1.7 km |
+| FPV quad | ~70 dB | multirotor whine, ~2-8 kHz (blade-rate comb) | ~100 m | ~690 m (high-band absorption tempers) |
+| Quiet / fiber-optic FPV | ~68 dB | high whine, ~2-8 kHz | ~80 m | ~555 m |
+
+\* Coherent reach at ~48 phones (`√48 ≈ 6.9x`) in the weak-signal regime; scale to other counts by
+`√N` (about 10x at ~96 phones). Air absorption, worse at high frequency, caps the top end, so the
+longer figures are optimistic ceilings; the loud, already-long classes are absorption-limited, so
+CoHear tightens the bearing and fix rather than extending the range.
 
 Frequency compounds the range story. Low-frequency engine noise (ICE, marine) barely attenuates
 in air, which is why the loud ICE classes are heard for kilometers; the high-pitched kHz whine of a
